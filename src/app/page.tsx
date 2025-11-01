@@ -1,7 +1,10 @@
+import { ThemeChanger } from "@/components/ThemeChanger/ThemeChanger";
+
 export default function Home() {
   return (
     <div className="flex">
-      Yup
+      <ThemeChanger />
+      <div>Yup</div>
     </div>
   );
 }
