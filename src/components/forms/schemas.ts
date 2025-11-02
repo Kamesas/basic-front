@@ -17,3 +17,8 @@ export const schemaRegister = z.object({
     .max(100, "Display name must be at most 100 characters")
     .optional(),
 });
+
+export const schemaLogin = z.object({
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  email: z.email("invalid email format").optional(),
+});

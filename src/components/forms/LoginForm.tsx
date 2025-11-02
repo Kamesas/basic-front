@@ -1,44 +1,41 @@
 "use client";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { schemaRegister } from "./schemas";
-
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
-  FieldError,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
   Field,
+  FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
-  FieldDescription,
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "../ui/card";
+import { schemaLogin } from "./schemas";
+import z from "zod";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-export const RegisterForm = ({
+export function LoginForm({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  const { control, handleSubmit } = useForm<z.infer<typeof schemaRegister>>({
+}: React.ComponentProps<"div">) {
+  const { control, handleSubmit } = useForm<z.infer<typeof schemaLogin>>({
     defaultValues: {
-      username: "",
       password: "",
-      email: "",
-      displayname: "",
+      email: undefined,
     },
     mode: "onTouched",
-    resolver: zodResolver(schemaRegister),
+    resolver: zodResolver(schemaLogin),
   });
 
-  const onSubmit = async (data: z.infer<typeof schemaRegister>) => {
+  const onSubmit = async (data: z.infer<typeof schemaLogin>) => {
     console.log("✅ FORM SUBMITTED SUCCESSFULLY!");
     console.log("data", data);
   };
@@ -47,8 +44,8 @@ export const RegisterForm = ({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome</CardTitle>
-          <CardDescription>Create an account to get started</CardDescription>
+          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardDescription>Login with your Google account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,11 +58,11 @@ export const RegisterForm = ({
                       fill="currentColor"
                     />
                   </svg>
-                  Register with Google
+                  Login with Google
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or with your email
+                Or continue with
               </FieldSeparator>
 
               <Controller
@@ -79,51 +76,8 @@ export const RegisterForm = ({
                         {...field}
                         id={field.name}
                         aria-invalid={fieldState.invalid}
-                        autoComplete="email"
-                        placeholder="m@example.com"
-                      />
-                      <FieldError>{fieldState.error?.message}</FieldError>
-                    </Field>
-                  </>
-                )}
-              />
-
-              <Controller
-                name="username"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <>
-                    <Field>
-                      <FieldLabel htmlFor="username">Username</FieldLabel>
-                      <Input
-                        {...field}
-                        type="text"
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
-                        autoComplete="new-username"
-                        placeholder="username"
-                      />
-                      <FieldError>{fieldState.error?.message}</FieldError>
-                    </Field>
-                  </>
-                )}
-              />
-
-              <Controller
-                name="displayname"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <>
-                    <Field>
-                      <FieldLabel htmlFor="displayname">
-                        Display name
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
                         autoComplete="off"
-                        placeholder="Display Name"
+                        placeholder="m@example.com"
                       />
                       <FieldError>{fieldState.error?.message}</FieldError>
                     </Field>
@@ -140,7 +94,7 @@ export const RegisterForm = ({
                       <div className="flex items-center">
                         <FieldLabel htmlFor="password">Password</FieldLabel>
                         <a
-                          href="#"
+                          href="/auth/forgot-password"
                           className="ml-auto text-sm underline-offset-4 hover:underline"
                         >
                           Forgot your password?
@@ -152,7 +106,7 @@ export const RegisterForm = ({
                         type="password"
                         required
                         aria-invalid={fieldState.invalid}
-                        autoComplete="new-password"
+                        autoComplete="off"
                         placeholder="m@example.com"
                       />
                       <FieldError>{fieldState.error?.message}</FieldError>
@@ -164,7 +118,8 @@ export const RegisterForm = ({
               <Field>
                 <Button type="submit">Login</Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="/auth/login">Sign up</a>
+                  Don&apos;t have an account?{" "}
+                  <a href="/auth/register">Sign up</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
@@ -177,4 +132,4 @@ export const RegisterForm = ({
       </FieldDescription>
     </div>
   );
-};
+}
