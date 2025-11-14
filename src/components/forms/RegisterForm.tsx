@@ -32,7 +32,7 @@ export const RegisterForm = ({
       username: "",
       password: "",
       email: "",
-      displayname: "",
+      displayName: "",
     },
     mode: "onTouched",
     resolver: zodResolver(schemaRegister),
@@ -110,12 +110,12 @@ export const RegisterForm = ({
               />
 
               <Controller
-                name="displayname"
+                name="displayName"
                 control={control}
                 render={({ field, fieldState }) => (
                   <>
                     <Field>
-                      <FieldLabel htmlFor="displayname">
+                      <FieldLabel htmlFor="displayName">
                         Display name
                       </FieldLabel>
                       <Input

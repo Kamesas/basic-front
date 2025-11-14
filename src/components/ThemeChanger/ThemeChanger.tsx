@@ -22,7 +22,6 @@ export const ThemeChanger = () => {
   return (
     <div>
       <Button
-        type="button"
         variant={"outline"}
         onClick={() =>
           setTheme((prev) => {

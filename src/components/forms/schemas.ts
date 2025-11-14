@@ -1,6 +1,11 @@
 import z from "zod";
 
-export const schemaRegister = z.object({
+export const schemaLogin = z.object({
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  email: z.email("Invalid email format"),
+});
+
+export const schemaRegister = schemaLogin.extend({
   username: z
     .string()
     .min(3, "Username must be at least 3 characters")
@@ -9,16 +14,9 @@ export const schemaRegister = z.object({
       /^[a-zA-Z0-9_]+$/,
       "Username can only contain letters, numbers, and underscores",
     ),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  email: z.email("invalid email format").optional(),
-  displayname: z
+  displayName: z
     .string()
     .min(1, "display name cannot be empty")
     .max(100, "Display name must be at most 100 characters")
     .optional(),
-});
-
-export const schemaLogin = z.object({
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  email: z.email("invalid email format").optional(),
 });
